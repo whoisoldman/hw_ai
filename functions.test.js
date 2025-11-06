@@ -48,3 +48,46 @@ describe('addTodoItem', () => {
     expect(fs.writeFile).toHaveBeenCalledWith('./storage.json', newData, 'utf8', expect.any(Function));
   });
 });
+
+
+const fs = require('fs');
+const { deleteTodoItem } = require('./functions');
+
+test('удаляет задачу по id из storage.json', () => {
+  // 1. Создаём временные данные
+  const mockData = [
+    { id: 1, text: 'Task 1' },
+    { id: 2, text: 'Task 2' }
+  ];
+  fs.writeFileSync('./storage.json', JSON.stringify(mockData));
+
+  // 2. Удаляем задачу
+  deleteTodoItem(1);
+
+  // 3. Проверяем результат
+  const updated = JSON.parse(fs.readFileSync('./storage.json', 'utf8'));
+  expect(updated).toEqual([{ id: 2, text: 'Task 2' }]);
+});
+
+
+describe('deleteTodoItem', () => {
+  beforeEach(() => {
+    // подготавливаем тестовые данные
+    const mockData = [
+      { id: 1, text: 'Task 1' },
+      { id: 2, text: 'Task 2' },
+    ];
+    fs.writeFileSync('./storage.json', JSON.stringify(mockData));
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('удаляет задачу по id из storage.json', () => {
+    const { deleteTodoItem } = require('./functions');
+    deleteTodoItem(1);
+    const updated = JSON.parse(fs.readFileSync('./storage.json', 'utf8'));
+    expect(updated).toEqual([{ id: 2, text: 'Task 2' }]);
+  });
+});
