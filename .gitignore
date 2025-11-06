@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env
+.env
+.env.*.local
+
+# Tests / Coverage / Jest cache
+coverage/
+.jest/
+jest-cache/
+jest-results.json
+
+# Logs
+logs/
+*.log
+
+# Editor
+.vscode/
+.idea/
+
+# Build / Temp
+dist/
+build/
+.tmp/
